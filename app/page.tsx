@@ -1,10 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useRef } from "react";
+import Cookie from 'js-cookie';
+
 
 export default function Home() {
 
   const iframeRef = useRef(null);
+  // const valorCookie = Cookie.get('miCookie');
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -50,7 +53,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Read our docs
+            {Cookie.get('session_id')}
           </a>
         </div>
 
@@ -60,7 +63,14 @@ export default function Home() {
           style={{ width: '100%', height: '100vh', border: '1px solid black' }}
           title="UMA"
           allow="camera; microphone;"
+          sandbox="allow-scripts allow-same-origin allow-popups" 
         />
+
+        <div>
+          <h1 className="text-2xl font-semibold">Cookie</h1>
+          <p>{Cookie.get('session_id')}</p>
+        </div>
+
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a

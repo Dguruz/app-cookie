@@ -9,6 +9,7 @@ const CameraStream = () => {
    const [isStreamStarted, setIsStreamStarted] = useState(false);
    const [connectionStatus, setConnectionStatus] = useState("CONNECTING");
    const [activeConnections, setActiveConnections] = useState<number | null>(null);
+  const [cookie, setCookie] = useState('xd');
 
    const { lastMessage, readyState, sendMessage } = useWebSocket("/py/ws", {
       shouldReconnect: () => true,
@@ -84,17 +85,22 @@ const CameraStream = () => {
 
    useEffect(() => {
       // Crear una cookie al cargar el componente
-      Cookie.set('miCookie', 'valorDeCookie', { expires: 7, path: '/' });
+      // Cookie.set('miCookie', 'valorDeCookie', { expires: 7, path: '/' });
+      //configurar esto:
+      //Set - Cookie: session_id = abc123; SameSite = None; Secure
+      Cookie.set('session_id', 'abc123', { SameSite: 'None', Secure: true ,Path: '/'});
+
 
       // También puedes leer la cookie si es necesario
-      const valorCookie = Cookie.get('miCookie');
-      console.log('Valor de la cookie:', valorCookie);
+     const valorCookie = Cookie.get('session_id');
+      setCookie(valorCookie);
    }, []);
 
    return (
       <div className="max-w-2xl mx-auto border border-gray-200 rounded-lg p-4">
          <div className="mb-4 border-b border-gray-200 pb-2">
             <h2 className="text-2xl m-0">JPEG Stream</h2>
+         <h1>{cookie}</h1>
          </div>
          <div className="mb-4">
             <div className="flex justify-between items-center mb-2">
